@@ -2,6 +2,7 @@ package org.jfree.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,11 @@ class KierasTests {
 
 	private Range exampleRange;
 	
+  	@BeforeAll
+  	static void setUpBeforeClass() throws Exception {
+  	}
+  	
+  	
 //We are combining the files together. This file is a combination of the Range Contains Test
 // and the Range GetLength test
 	
