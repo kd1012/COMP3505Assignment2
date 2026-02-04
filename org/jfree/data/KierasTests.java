@@ -2,18 +2,22 @@ package org.jfree.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class KierasTests {
 
-	private Range exampleRange;
-	
+
   	@BeforeAll
   	static void setUpBeforeClass() throws Exception {
   	}
   	
+  	@BeforeEach
+  	void setUp() throws Exception {
+  	}
   	
 //We are combining the files together. This file is a combination of the Range Contains Test
 // and the Range GetLength test
@@ -21,50 +25,49 @@ class KierasTests {
 	
 //CONTAINS TEST
 
-  	@BeforeEach
-  	void setUp() throws Exception {
-  		exampleRange = new Range(-1, 1);
-  		
-  	}
 	
-//Values can be below the lower limit, return false
+  	//Values can be below the lower limit, return false
   	@Test
   	void testValueBelowLowerLimit() {
+  		Range exampleRange = new Range (-1.0, 1.0);
   		assertFalse(exampleRange.contains(-1.1), "False: Value is below the lower limit");
   	}
   	
   	
-//Values can be on the lower limit, return true (see assumption above)
+  	//Values can be on the lower limit, return true (see assumption above)
   	@Test
   	void testValueEqualLowerLimit() {
+  		Range exampleRange = new Range (-1.0, 1.0);
   		assertTrue(exampleRange.contains(-1.0), "True: Value is equal to the lower limit");
   	}
   	
   	
-//Values can be inside the range, return true
+  	//Values can be inside the range, return true
 	@Test
 	void testValueInsideRange() {
+		Range exampleRange = new Range (-1.0, 1.0);
 		assertTrue(exampleRange.contains(0.0), "True: Value is inside the range");
 		
 	}
 	
 
-//Values can be on the upper limit, return true (see assumption above)
+	//Values can be on the upper limit, return true (see assumption above)
 	@Test
   	void testValueEqualUpperLimit() {
+		Range exampleRange = new Range (-1.0, 1.0);
   		assertTrue(exampleRange.contains(1.0), "True: Value is equal to the upper limit");
   	}
 	
 	
-//Values can be above the upper limit, return false
+	//Values can be above the upper limit, return false
 	@Test
   	void testValueAboveUpperLimit() {
+		Range exampleRange = new Range (-1.0, 1.0);
   		assertFalse(exampleRange.contains(1.1), "False: Value is above the upper limit");
   	}
 	
-	
-//GET LENGTH TEST
-	
+
+//GET LENGTH TEST	
 	@Test
 	void testLengthBothNegWhole(){
 		Range exampleRange = new Range (-5.0, -1.0);
@@ -118,7 +121,7 @@ class KierasTests {
 		
 	}
 
-//Supposed to fail, the docs state they should be illegal arguments
+	//Supposed to fail, the docs state they should be illegal arguments
 	@Test
 	void testLengthLowerGreaterThanUpper(){
 		Range exampleRange = new Range (5.0, 3.0);
@@ -126,6 +129,14 @@ class KierasTests {
 		//System.out.println("e " +exampleRange);
 		
 	}
+	
+	
+  	@AfterEach
+  	void tearDown() throws Exception {
+  	}
+  	@AfterAll
+  	static void tearDownAfterClass() throws Exception {
+  	}
 
 	
 }
