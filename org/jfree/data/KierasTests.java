@@ -1,14 +1,64 @@
 package org.jfree.data;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+class KierasTests {
 
+	private Range exampleRange;
+	
+//We are combining the files together. This file is a combination of the Range Contains Test
+// and the Range GetLength test
+	
+	
+//CONTAINS TEST
 
-//Assumption is that length is upper limit minus lower limit
+  	@BeforeEach
+  	void setUp() throws Exception {
+  		exampleRange = new Range(-1, 1);
+  		
+  	}
+	
+//Values can be below the lower limit, return false
+  	@Test
+  	void testValueBelowLowerLimit() {
+  		assertFalse(exampleRange.contains(-1.1), "False: Value is below the lower limit");
+  	}
+  	
+  	
+//Values can be on the lower limit, return true (see assumption above)
+  	@Test
+  	void testValueEqualLowerLimit() {
+  		assertTrue(exampleRange.contains(-1.0), "True: Value is equal to the lower limit");
+  	}
+  	
+  	
+//Values can be inside the range, return true
+	@Test
+	void testValueInsideRange() {
+		assertTrue(exampleRange.contains(0.0), "True: Value is inside the range");
+		
+	}
+	
 
-class RangeGetLengthTest {
-
+//Values can be on the upper limit, return true (see assumption above)
+	@Test
+  	void testValueEqualUpperLimit() {
+  		assertTrue(exampleRange.contains(1.0), "True: Value is equal to the upper limit");
+  	}
+	
+	
+//Values can be above the upper limit, return false
+	@Test
+  	void testValueAboveUpperLimit() {
+  		assertFalse(exampleRange.contains(1.1), "False: Value is above the upper limit");
+  	}
+	
+	
+//GET LENGTH TEST
+	
 	@Test
 	void testLengthBothNegWhole(){
 		Range exampleRange = new Range (-5.0, -1.0);
@@ -70,4 +120,6 @@ class RangeGetLengthTest {
 		//System.out.println("e " +exampleRange);
 		
 	}
+
+	
 }
