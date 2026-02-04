@@ -130,7 +130,54 @@ class KierasTests {
 		
 	}
 	
+//Get central value
 	
+  	@Test                	
+  	void testCentralBothNegWhole(){
+		Range exampleRange = new Range (-5.0, -1.0);
+		assertEquals(-3.0, exampleRange.getCentralValue(), 0.1d, "The central value of (-5.0, -1.0) is -3.0, range is negative whole numbers");
+		
+	}
+	@Test
+	void testCentralBothNegDecimal(){
+		Range exampleRange = new Range (-4.2, -1.6);
+		assertEquals(-2.9, exampleRange.getCentralValue(), 0.1d, "The central value of (-4.2, -1.6) is -2.9, range is negative decimal numbers");
+	}
+
+	@Test
+	void testCentralNegativeToPositiveWhole() {
+		Range exampleRange = new Range (-1.0, 1.0);
+		assertEquals(0.0, exampleRange.getCentralValue(), 0.1d, "The central value of (-1,1) is 0, range is positive to negative whole numbers");
+	}
+	
+	@Test
+	void testCentralNegativeToPositiveDecimal() {
+		Range exampleRange = new Range (-1.5, 1.9);
+		assertEquals(0.2, exampleRange.getCentralValue(), 0.1d, "The central value of (-1.5, 1.9) is 0.2, range is positive to negative decimal numbers");
+	}
+	
+	@Test
+	void testCentralBothPosWhole(){
+		Range exampleRange = new Range (2.0, 7.0);
+		assertEquals(4.5, exampleRange.getCentralValue(), 0.1d, "The central value of (2.0, 7.0) is 4.5, range is both positive whole numbers");
+		
+	}
+	
+	@Test
+	void testCentralBothPosDecimal(){
+		Range exampleRange = new Range (2.5, 6.3);
+		assertEquals(4.4, exampleRange.getCentralValue(), 0.1d, "The central value of (2.5, 6.3) is 4.4, range is both positive decimal numbers");
+		
+	}
+	
+	@Test
+	void testCentralSameNumbers(){
+		Range exampleRange = new Range (0.0, 0.0);
+		assertEquals(0.0, exampleRange.getCentralValue(),0.1d,  "The central value of (0.0, 0.0) is 0.0, range is the same number");
+		
+	}
+	
+  	
   	@AfterEach
   	void tearDown() throws Exception {
   	}
