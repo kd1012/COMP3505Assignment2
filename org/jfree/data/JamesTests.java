@@ -51,6 +51,7 @@ class JamesTests {
 //
 //	}
 // Combine function tests - Creates a new range by combining two existing ranges.
+// 5.0-10.0 combined with 3.0-4.0 would return 3.0-10.0 etc...
 	@Test
 	void testCombineBothNull() throws Exception{
 		assertNull( Range.combine(null, null),"Two nulls return a null");
@@ -111,8 +112,36 @@ class JamesTests {
 		assertEquals(Range.combine(rangeNeg1, rangeNeg2).getUpperBound(), -1.0, "Range should have upper bound of highest number: -1.0");
 	}
 	// Constrain function - Returns the value within the range that is closest to the specified value.
+	// range 5.0-10.0 constrain 7.0 should return, below should return lowest value, above should return highest value
 	@Test
 	void testConstrainInside() throws Exception{
-
+		Range rangeInside = new Range(1.0, 8.0);
+		assertEquals(rangeInside.constrain(5.0), 5.0, "5.0 exists inside 1.0-8.0");
+	}
+	@Test
+	void testConstrainBelow() throws Exception{
+		Range rangeBelow = new Range(5.0, 10.0);
+		assertEquals(rangeBelow.constrain(3.0), 5.0, "Value below range should return lower bound: 5.0");
+	}
+	@Test
+	void testConstrainAbove() throws Exception{
+		Range rangeAbove = new Range(5.0, 10.0);
+		assertEquals(rangeAbove.constrain(13.0), 10.0, "Value above range should return upper bound: 10.0");
+	}
+	@Test
+	void testConstrainBound() throws Exception{
+		Range rangeBound = new Range(5.0, 10.0);
+		assertEquals(rangeBound.constrain(5.0), 5.0, "Value at the lower bound should return :5.0");
+		assertEquals(rangeBound.constrain(10.0), 10.0, "Value at the upper bound should return: 10.0");
+	}
+	@Test
+	void testConstrainNegative() throws Exception{
+		Range rangeConstrainNegative = new Range(-8.0, -1.0);
+		assertEquals(rangeConstrainNegative.constrain(-5.0), -5.0, "Negative value inside range should be returned: -5.0");
+	}
+	@Test
+	void testConstrainEmpty() throws Exception{
+		Range rangeConstrainEmpty= new Range(2.0, 2.0);
+		assertEquals(rangeConstrainEmpty.constrain(10.0), 2.0, "Constrained value on empty range should return value of range: 2.0");
 	}
 }
