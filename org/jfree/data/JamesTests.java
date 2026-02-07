@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 
 
 
-class JamesTests {
+class RangeTest {
 //	Here if I need them, IDK how I'm building these yet.
 //	@BeforeAll
 //	static void setUpBeforeClass() throws Exception{
@@ -88,7 +88,7 @@ class JamesTests {
 		Range rangeOver1 = new Range(2.0, 4.0);
 		Range rangeOver2 = new Range(3.0, 6.0);
 		assertEquals(Range.combine(rangeOver1, rangeOver2).getLowerBound(), 2.0, "Range lower should be 2.0");
-		assertEquals(Range.combine(rangeOver1, rangeOver2).getUpperBound(), 6.0, "Range upper should be 8.0");
+		assertEquals(Range.combine(rangeOver1, rangeOver2).getUpperBound(), 6.0, "Range upper should be 6.0");
 	}
 	@Test
 	void testCombineSame() throws Exception{
@@ -101,8 +101,9 @@ class JamesTests {
 	void testCombineInside() throws Exception{
 		Range rangeInside1 = new Range(2.0, 8.0);
 		Range rangeInside2 = new Range(3.0, 7.0);
-		assertEquals(Range.combine(rangeInside1, rangeInside2).getLowerBound(), 2.0, "Range inside another should have lower bound of larger range: 2.0");
-		assertEquals(Range.combine(rangeInside1, rangeInside2).getUpperBound(), 8.0, "Range inside another should have upper bound of larger range: 8.0");
+//		assertEquals(Range.combine(rangeInside1, rangeInside2).getLowerBound(), 2.0, "Range inside another should have lower bound of larger range: 2.0");
+//		assertEquals(Range.combine(rangeInside1, rangeInside2).getUpperBound(), 8.0, "Range inside another should have upper bound of larger range: 8.0");
+		assertEquals(Range.combine(rangeInside1, rangeInside2), rangeInside1, "Range should equal larger range");
 	}
 	@Test
 	void testCombineNegative() throws Exception{
@@ -143,5 +144,24 @@ class JamesTests {
 	void testConstrainEmpty() throws Exception{
 		Range rangeConstrainEmpty= new Range(2.0, 2.0);
 		assertEquals(rangeConstrainEmpty.constrain(10.0), 2.0, "Constrained value on empty range should return value of range: 2.0");
+	}
+	// Shift -  Returns a range the size of the input range, which has been moved positively (to the right) by the delta value.
+	// 3.0-7.0 shifted 5 should return 8.0-12.0, negative values should shift lower
+	@Test
+	void testShiftPositive() throws Exception{
+		Range rangeShiftPos = new Range(2.2, 3.5);
+		Range rangeShiftPosShifted = new Range(5.2, 6.5);
+		assertEquals(Range.shift(rangeShiftPos, 3), rangeShiftPosShifted, "Shifted range should match new range");
+	}
+	@Test
+	void testShiftNegative() throws Exception{
+		Range rangeShiftNeg = new Range(2.0, 3.0);
+		Range rangeShiftNegShifted = new Range(1.0,2.0);
+		assertEquals(Range.shift(rangeShiftNeg, -1), rangeShiftNegShifted, "Shifted range should be 1.0-2.0");
+	}
+	@Test
+	void testShiftNone() throws Exception{
+		Range rangeShiftNone = new Range(2.0, 5.0);
+		assertEquals(Range.shift(rangeShiftNone, 0), rangeShiftNone, "Shifted by none should return same range");
 	}
 }
