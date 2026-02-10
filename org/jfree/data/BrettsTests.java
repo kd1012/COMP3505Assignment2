@@ -114,7 +114,40 @@ class RangeTest {
 //
 //	     Returns a range that includes all the values in the specified range AND contains the specified value. 
 	
-	
+	@Test
+	void testExpandToIncludeRangeNull() {
+		Range result = Range.expandToInclude(null, 10.0);
+
+		assertEquals(10.0, result.getLowerBound(), 0.0001);
+		assertEquals(10.0, result.getUpperBound(), 0.0001);
+	}
+
+	@Test
+	void testExpandToIncludeRangeAbove() {
+		Range base = new Range(5.0, 10.0);
+		Range result = Range.expandToInclude(base, 12.5);
+
+		assertEquals(5.0, result.getLowerBound(), 0.0001);
+		assertEquals(12.5, result.getUpperBound(), 0.0001);
+	}
+
+	@Test
+	void testExpandToIncludeRangeBelow() {
+		Range base = new Range(5.0, 10.0);
+		Range result = Range.expandToInclude(base, 2.5);
+
+		assertEquals(2.5, result.getLowerBound(), 0.0001);
+		assertEquals(10.0, result.getUpperBound(), 0.0001);
+	}
+
+	@Test
+	void testExpandToIncludeRangeMiddle() {
+		Range base = new Range(5.0, 10.0);
+		Range result = Range.expandToInclude(base, 7.5);
+
+		assertEquals(5.0, result.getLowerBound(), 0.0001);
+		assertEquals(10.0, result.getUpperBound(), 0.0001);
+	}
 	
 	@AfterEach
 	void tearDown() throws Exception {
