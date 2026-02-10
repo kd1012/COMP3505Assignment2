@@ -58,21 +58,21 @@ class RangeTest {
 	}
 	@Test
 	void testCombineFirstNull() throws Exception{
-		Range rangeNull1 = new Range(1.0, 3.0);
-		Range rangeNull2 = Range.combine(null,  rangeNull1);
-		assertEquals(rangeNull1, rangeNull2, "A null in first place should return second place");
+		Range rangeNullFirst1 = new Range(1.0, 3.0);
+		Range rangeNullFirst2 = Range.combine(null,  rangeNullFirst1);
+		assertEquals(rangeNullFirst1, rangeNullFirst2, "A null in first place should return second place");
 	}
 	@Test
 	void testCombineSecondNull() throws Exception{
-		Range rangeNull1=new Range(2.0, 4.0);
-		Range rangeNull2= Range.combine(rangeNull1, null);
-		assertEquals(rangeNull2, rangeNull1, "A null in second place should return first place");
+		Range rangeNullSecond1=new Range(2.0, 4.0);
+		Range rangeNullSecond2= Range.combine(rangeNullSecond1, null);
+		assertEquals(rangeNullSecond2, rangeNullSecond1, "A null in second place should return first place");
 	}
 	@Test
 	void testCombineFar() throws Exception{
 		Range rangeFar1 = new Range(2.0, 4.0);
 		Range rangeFar2 = new Range(8.0, 10.0);
-		Range resultRangeFar = Range.combine(rangeFar1, rangeFar2);
+		Range resultRangeFar = Range.combine(rangeFar2, rangeFar1);
 		assertEquals(resultRangeFar.getLowerBound(), 2.0, "Lower bound should be 2.0");
 		assertEquals(resultRangeFar.getUpperBound(), 10.0, "Upper bound should be 10.0");
 	}
@@ -80,15 +80,15 @@ class RangeTest {
 	void testCombineAdjacent() throws Exception{
 		Range rangeNext1 = new Range(2.0, 4.0);
 		Range rangeNext2 = new Range(4.0, 8.0);
-		assertEquals(Range.combine(rangeNext1, rangeNext2).getLowerBound(), 2.0, "Range lower bound should be 2.0");
-		assertEquals(Range.combine(rangeNext1, rangeNext2).getUpperBound(), 8.0, "Upper should be 8.0");
+		assertEquals(Range.combine(rangeNext2, rangeNext1).getLowerBound(), 2.0, "Range lower bound should be 2.0");
+		assertEquals(Range.combine(rangeNext2, rangeNext1).getUpperBound(), 8.0, "Upper should be 8.0");
 	}
 	@Test
 	void testCombineOverlap() throws Exception{
 		Range rangeOver1 = new Range(2.0, 4.0);
 		Range rangeOver2 = new Range(3.0, 6.0);
-		assertEquals(Range.combine(rangeOver1, rangeOver2).getLowerBound(), 2.0, "Range lower should be 2.0");
-		assertEquals(Range.combine(rangeOver1, rangeOver2).getUpperBound(), 6.0, "Range upper should be 6.0");
+		assertEquals(Range.combine(rangeOver2, rangeOver1).getLowerBound(), 2.0, "Range lower should be 2.0");
+		assertEquals(Range.combine(rangeOver2, rangeOver1).getUpperBound(), 6.0, "Range upper should be 6.0");
 	}
 	@Test
 	void testCombineSame() throws Exception{
@@ -103,7 +103,7 @@ class RangeTest {
 		Range rangeInside2 = new Range(3.0, 7.0);
 //		assertEquals(Range.combine(rangeInside1, rangeInside2).getLowerBound(), 2.0, "Range inside another should have lower bound of larger range: 2.0");
 //		assertEquals(Range.combine(rangeInside1, rangeInside2).getUpperBound(), 8.0, "Range inside another should have upper bound of larger range: 8.0");
-		assertEquals(Range.combine(rangeInside1, rangeInside2), rangeInside1, "Range should equal larger range");
+		assertEquals(Range.combine(rangeInside2, rangeInside1), rangeInside1, "Range should equal larger range");
 	}
 	@Test
 	void testCombineNegative() throws Exception{
@@ -164,4 +164,28 @@ class RangeTest {
 		Range rangeShiftNone = new Range(2.0, 5.0);
 		assertEquals(Range.shift(rangeShiftNone, 0), rangeShiftNone, "Shifted by none should return same range");
 	}
+	// toString - Returns a string representation of this Range.
+	// Range of 1.0-4.0 should contain both 1.0 and 4.0
+	@Test
+	void testStringPos() throws Exception{
+		Range rangeStringPos = new Range(1.0, 10.0);
+		// assertEquals(rangeStringPos.toString(), "Range["+Double.toString(rangeStringPos.getLowerBound())+ "," + Double.toString(rangeStringPos.getUpperBound()) + "]", "Range should print out in Range[x.x,x.x] format");
+		assertEquals(rangeStringPos.toString(), "Range[1.0,10.0]", "Range should print in Range[x.x,y.y] format matching passed parameters");
+	}
+	@Test
+	void testStringNeg() throws Exception{
+		Range rangeStringNeg = new Range(-10.0, -3.0);
+		assertEquals(rangeStringNeg.toString(), "Range[-10.0,-3.0", "Range should print in 'Range[x.x,y.y] format");
+	}
+	@Test
+	void testStringNegPos() throws Exception{
+		Range rangeStringNegPos = new Range(-3.0, 5.0);
+		assertEquals(rangeStringNegPos.toString(), "Range[-3.0,5.0]", "Range should be displayed in 'Range[x.x,y.y] format");		
+	}
+	@Test
+	void testStringDec() throws Exception{
+		Range rangeStringDec = new Range(3.3,5.5);
+		assertEquals(rangeStringDec.toString(), "Range[3.3,5.5]", "Range should print in format 'Range[x.x,y.y]");
+	}
+	
 }
