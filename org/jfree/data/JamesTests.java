@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 //	https://docs.junit.org/5.0.1/api/org/junit/jupiter/api/Assertions.html
 
 // combine(Range range1, Range range2)
@@ -31,7 +27,7 @@ import org.junit.jupiter.api.Test;
 
 
 
-class RangeTest {
+class JamesTests {
 //	Here if I need them, IDK how I'm building these yet.
 //	@BeforeAll
 //	static void setUpBeforeClass() throws Exception{
